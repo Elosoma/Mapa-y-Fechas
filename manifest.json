@@ -1,0 +1,9 @@
+{
+  "name": "Mapa Aleatorio",
+  "short_name": "Mapa",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#111",
+  "theme_color": "#00aaff",
+  "icons": []
+}
