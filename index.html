@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa Aleatorio</title>
+
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      font-family: Arial;
+      text-align: center;
+      margin: 0;
+      background: #111;
+      color: white;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    button {
+      width: 90%;
+      max-width: 300px;
+      padding: 15px;
+      margin: 10px;
+      font-size: 18px;
+      border-radius: 10px;
+      border: none;
+      background: #00aaff;
+      color: white;
+    }
+
+    #mapa {
+      position: relative;
+      width: 95%;
+      margin: auto;
+    }
+
+    #mapa img {
+      width: 100%;
+      display: block;
+    }
+
+    #punto {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: red;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Mapa Aleatorio</h1>
+
+<button onclick="generarNumero()">Número</button>
+<button onclick="generarCoordenadas()">Punto</button>
+<button onclick="hacerTodo()">Todo</button>
+
+<h2 id="numero"></h2>
+<h3 id="coordenadas"></h3>
+
+<div id="mapa">
+  <img id="imagenMapa" src="mapa.jpg">
+  <div id="punto"></div>
+</div>
+
+<script>
+function generarNumero() {
+  const num = Math.floor(Math.random() * 5421);
+  document.getElementById("numero").innerText = "Número: " + num;
+}
+
+function generarCoordenadas() {
+  const lat = Math.random() * 180 - 90;
+  const lon = Math.random() * 360 - 180;
+
+  document.getElementById("coordenadas").innerText =
+    `Lat: ${lat.toFixed(4)}, Lon: ${lon.toFixed(4)}`;
+
+  colocarPunto(lat, lon);
+}
+
+function colocarPunto(lat, lon) {
+  const img = document.getElementById("imagenMapa");
+  const punto = document.getElementById("punto");
+
+  const width = img.clientWidth;
+  const height = img.clientHeight;
+
+  const x = (lon + 180) * (width / 360);
+  const y = (90 - lat) * (height / 180);
+
+  punto.style.left = x + "px";
+  punto.style.top = y + "px";
+  punto.style.display = "block";
+}
+
+function hacerTodo() {
+  generarNumero();
+  generarCoordenadas();
+}
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
+</script>
+
+</body>
+</html>
